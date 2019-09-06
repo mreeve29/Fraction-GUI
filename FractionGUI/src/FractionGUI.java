@@ -1,6 +1,6 @@
 import BreezySwing.*;
 import javax.swing.*;
-
+//Test Comment
 public class FractionGUI extends GBFrame {
 
 	JTextField fraction1Field = addTextField("", 1, 0, 1, 1);
