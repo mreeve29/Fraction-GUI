@@ -119,13 +119,13 @@ public class FractionGUI extends GBFrame {
 			one = temp;
 		}
 		int gcf = one;
-		for (int i = one; i > 1; i--) {
+		for (int i = one; i >= 1; i--) {
 			if (one % i == 0 && two % i == 0) {
 				gcf = i;
 				break;
 			}
 		}
-		
+		if(gcf == 0) gcf = 1;
 		return gcf;
 	}
 
