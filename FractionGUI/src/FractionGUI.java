@@ -74,6 +74,13 @@ public class FractionGUI extends GBFrame {
 		
 		String check = "NOERROR";
 		
+		
+		if(fraction1.length <= 1 || fraction2.length <= 1) {
+			check = "";
+			return check;
+		}
+		
+		
 		if(occurencesInString(fraction1Raw, '/') > 1 || occurencesInString(fraction2Raw, '/') > 1) {
 			check = "Multiple '/' characters";
 			return check;
