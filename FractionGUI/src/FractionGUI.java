@@ -3,28 +3,34 @@ import javax.swing.*;
 
 public class FractionGUI extends GBFrame {
 
-	JTextField fraction1Field = addTextField("", 1, 0, 1, 1);
-	JTextField fraction2Field = addTextField("", 1, 3, 1, 1);
-
-	JLabel multipltySymbol = addLabel("                       x", 1, 2, 1, 1);
-
-	JButton multiplyButton = addButton("Multiply", 5, 2, 1, 1);
+	JLabel formatLabel = addLabel("Format: x/y or x",1,2,1,1);
 	
+	//Add User Inputs / Buttons
+	JTextField fraction1Field = addTextField("", 2, 0, 1, 1);
+	JTextField fraction2Field = addTextField("", 2, 3, 1, 1);
+
+	JLabel multipltySymbol = addLabel("                       x", 2, 2, 1, 1);
+
+	JButton multiplyButton = addButton("Multiply", 6, 2, 1, 1);
+	
+	//Group for radio buttons
 	ButtonGroup bgTypeOfFraction = new ButtonGroup();
 
-	JRadioButton mixedButton = addRadioButton("Mixed Number",4,2,1,1);
-	JRadioButton improperButton = addRadioButton("Improper Fraction",3,2,1,1);
+	JRadioButton mixedButton = addRadioButton("Mixed Number",5,2,1,1);
+	JRadioButton improperButton = addRadioButton("Improper Fraction",4,2,1,1);
 	
 	
 	JLabel resultLabel = addLabel("", 6, 2, 1, 1);
 
+	//When multiply button is clicked
 	public void buttonClicked(JButton button) {
 		if (button == multiplyButton) {
 			
+			//Get input from textfields as strings
 			String fraction1Raw = fraction1Field.getText();
 			String fraction2Raw = fraction2Field.getText();
 			
-			
+			//If user enters a whole number --> add '/1' internally
 			if(occurencesInString(fraction1Raw, '/') == 0) {
 				fraction1Raw = fraction1Raw + "/1";
 			}
