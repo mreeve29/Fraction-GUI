@@ -2,16 +2,17 @@ import BreezySwing.*;
 import javax.swing.*;
 
 public class FractionGUI extends GBFrame {
-
-	JLabel formatLabel = addLabel("Format: x/y or x",1,2,1,1);
+	
+	
 	
 	//Add User Inputs / Buttons
 	JTextField fraction1Field = addTextField("", 2, 0, 1, 1);
 	JTextField fraction2Field = addTextField("", 2, 3, 1, 1);
 
-	JLabel multipltySymbol = addLabel("                       x", 2, 2, 1, 1);
+	JLabel multipltySymbol = addLabel("                               X", 2, 2, 1, 1);
 
 	JButton multiplyButton = addButton("Multiply", 6, 2, 1, 1);
+	JButton clearButton = addButton("  Clear  ", 7, 2, 1, 1);
 	
 	//Group for radio buttons
 	ButtonGroup bgTypeOfFraction = new ButtonGroup();
@@ -19,13 +20,16 @@ public class FractionGUI extends GBFrame {
 	JRadioButton mixedButton = addRadioButton("Mixed Number",5,2,1,1);
 	JRadioButton improperButton = addRadioButton("Improper Fraction",4,2,1,1);
 	
-	
+	//Labels
+	JLabel formatLabel = addLabel("               Format: x/y or x",1,2,1,1);
 	JLabel resultLabel = addLabel("", 6, 2, 1, 1);
 
-	//When multiply button is clicked
+	//button event handler
 	public void buttonClicked(JButton button) {
+		if(button == clearButton) {
+			clearFields();
+		}
 		if (button == multiplyButton) {
-			
 			//Get input from textfields as strings
 			String fraction1Raw = fraction1Field.getText();
 			String fraction2Raw = fraction2Field.getText();
@@ -38,30 +42,35 @@ public class FractionGUI extends GBFrame {
 				fraction2Raw = fraction2Raw + "/1";
 			}	
 			
-			
+			//error check / display message
 			String errorCheck = errorcheck(fraction1Raw, fraction2Raw);
 			if (!errorCheck.equals("NOERROR")) {
 				messageBox("Invalid data, format: 'x/y'\n" + errorCheck);
 				return;
 			}
 			
+			//once fields have been error checked:
+			
+			//split fraction at the '/' character
 			String[] fraction1 = fraction1Raw.split("/");
 			String[] fraction2 = fraction2Raw.split("/");
 			
 			
-			
+			//parse ints
 			int fraction1Numerator = Integer.parseInt(fraction1[0]);
 			int fraction1Denominator = Integer.parseInt(fraction1[1]);
 			int fraction2Numerator = Integer.parseInt(fraction2[0]);
 			int fraction2Denominator = Integer.parseInt(fraction2[1]);
 			
+			//check negatives and correct them
 			int[] fraction1Corrected = flipFraction(fraction1Numerator,fraction1Denominator);
 			int[] fraction2Corrected = flipFraction(fraction2Numerator,fraction2Denominator);
 			
-			
+			//multiply fractions
 			int numeratorProduct = fraction1Corrected[0] * fraction2Corrected[0];
 			int denominatorProduct = fraction1Corrected[1] * fraction2Corrected[1];
 
+			
 			String finalFraction = reduceFraction(numeratorProduct, denominatorProduct);
 			
 			resultLabel.setText(finalFraction);
@@ -70,34 +79,34 @@ public class FractionGUI extends GBFrame {
 	}
 
 	public String errorcheck(String fraction1Raw, String fraction2Raw) {
-		
 		String[] fraction1 = fraction1Raw.split("/");
 		String[] fraction2 = fraction2Raw.split("/");
 		
-		
 		int fraction1Numerator, fraction1Denominator, fraction2Numerator, fraction2Denominator;
 		
-		
+		//base error check value, if this is returned back, no error will be shown
 		String check = "NOERROR";
 		
-		
+		//if user only enters '/'
 		if(fraction1.length <= 1 || fraction2.length <= 1) {
 			check = "";
 			return check;
 		}
 		
-		
+		//check if user entered multiple '/' characters
 		if(occurencesInString(fraction1Raw, '/') > 1 || occurencesInString(fraction2Raw, '/') > 1) {
 			check = "Multiple '/' characters";
 			return check;
 		}
 		
-		
+		//check for blank fields
 		if (fraction1[0].equals("") || fraction2[0].equals("")) {
 			check = "Empty Numerator";
 			return check;
 		}
 		
+		
+		//attempt to parse numbers / also serves as integer check
 		try {
 			fraction1Numerator = Integer.parseInt(fraction1[0]);
 			fraction1Denominator = Integer.parseInt(fraction1[1]);
@@ -108,13 +117,7 @@ public class FractionGUI extends GBFrame {
 			return check;
 		}
 		
-		if ((int) fraction1Numerator != fraction1Numerator || (int) fraction1Denominator != fraction1Denominator
-				|| (int) fraction2Numerator != fraction2Numerator
-				|| (int) fraction2Denominator != fraction2Denominator) {
-			check = "Please only use integers";
-			return check;
-		}
-		
+		//check for 0 in denom
 		if (fraction1Denominator == 0 || fraction2Denominator == 0) {
 			check = "0 in denominator";
 			return check;
@@ -124,6 +127,7 @@ public class FractionGUI extends GBFrame {
 	}
 
 	public int findGCF(int one, int two) {
+		//sort two inputs
 		one = Math.abs(one);
 		two = Math.abs(two);
 		if (one > two) {
@@ -131,6 +135,8 @@ public class FractionGUI extends GBFrame {
 			two = one;
 			one = temp;
 		}
+		
+		//loop to find gcf
 		int gcf = one;
 		for (int i = one; i >= 1; i--) {
 			if (one % i == 0 && two % i == 0) {
@@ -143,17 +149,15 @@ public class FractionGUI extends GBFrame {
 	}
 
 	public String reduceFraction(int numerator, int denominator) {
+		//reduce with gcf
 		int gcf = findGCF(numerator, denominator);
 		numerator /= gcf;
 		denominator /= gcf;
 
-		String finalFraction = "if you're seeing this theres an error";
+		String finalFraction = "";
 		
-		if(numerator < 0 && denominator < 0) {
-			numerator = Math.abs(numerator);
-			denominator = Math.abs(denominator);
-		}
 
+		//output correct format depending on if user want mixed or improper
 		if (denominator == 1 && !improperButton.isSelected()) {
 			finalFraction = "" + numerator;
 		} else if (numerator == 0){
@@ -171,6 +175,7 @@ public class FractionGUI extends GBFrame {
 				if(wholeNum == 0) {
 					finalFraction = "" + remainder + "/" + denominator;
 				}else {
+					//remove negative character from output on remainder if whole number is negative
 					if(wholeNum < 0) {
 						finalFraction = "" + wholeNum + " " + Math.abs(remainder) + "/" + denominator;
 					}else {
@@ -183,8 +188,9 @@ public class FractionGUI extends GBFrame {
 
 	}
 
+	//this method corrects the signs on the fraction and returns the result in an array
 	public int[] flipFraction(int numerator, int denominator) {
-		int[] result = new int[2];
+		int[] result = {numerator, denominator};
 		
 		result[0] = numerator;
 		result[1] = denominator;
@@ -200,7 +206,7 @@ public class FractionGUI extends GBFrame {
 		return result;
 	}
 	
-	
+	//this method finds the amount of times a character occurs in a string, used for error checking multiple '/' symbols
 	public byte occurencesInString(String str, char c) {
 		byte occ = 0;
 		int firstIndex = str.indexOf(c);
@@ -211,12 +217,19 @@ public class FractionGUI extends GBFrame {
 		return occ;
 	}
 	
+	//constructor that modifies the buttongroup and sets the default radio button selected
 	public FractionGUI() {
 		bgTypeOfFraction.add(improperButton);
 		bgTypeOfFraction.add(mixedButton);
 		improperButton.setSelected(true);
 	}
 	
+	//reset all fields
+	public void clearFields(){	
+		fraction1Field.setText("");
+		fraction2Field.setText("");
+		resultLabel.setText("");
+	}
 	
 	public static void main(String[] args) {
 		FractionGUI frm = new FractionGUI();
