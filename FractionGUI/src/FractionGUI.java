@@ -1,5 +1,9 @@
+//Mike Reeve
+//B Block
+
 import BreezySwing.*;
 import javax.swing.*;
+
 
 public class FractionGUI extends GBFrame {
 
@@ -7,20 +11,22 @@ public class FractionGUI extends GBFrame {
 	JTextField fraction1Field = addTextField("", 2, 0, 1, 1);
 	JTextField fraction2Field = addTextField("", 2, 3, 1, 1);
 
-	JLabel multipltySymbol = addLabel("                               X", 2, 2, 1, 1);
+	JLabel multipltySymbol = addLabel("                    X", 2, 2, 1, 1);
 
-	JButton multiplyButton = addButton("Multiply", 6, 2, 1, 1);
-	JButton clearButton = addButton("  Clear  ", 7, 2, 1, 1);
+	JButton multiplyButton = addButton("      Multiply      ", 6, 3, 1, 1);
+	JButton clearButton = addButton("        Clear        ", 7, 3, 1, 1);
 
+	JLabel outputModeLabel = addLabel("Output Mode:", 5, 1, 1, 1);
+	
 	// Group for radio buttons
-	ButtonGroup bgTypeOfFraction = new ButtonGroup();
-
-	JRadioButton mixedButton = addRadioButton("Mixed Number", 5, 2, 1, 1);
-	JRadioButton improperButton = addRadioButton("Improper Fraction", 4, 2, 1, 1);
+	ButtonGroup bgTypeOfFraction = new ButtonGroup();	
+	
+	JRadioButton mixedButton = addRadioButton("Mixed Number", 6, 1, 1, 1);
+	JRadioButton improperButton = addRadioButton("Improper Fraction", 7, 1, 1, 1);
 
 	// Labels
-	JLabel formatLabel = addLabel("               Format: x/y or x", 1, 2, 1, 1);
-	JLabel resultLabel = addLabel("", 6, 2, 1, 1);
+	JLabel formatLabel = addLabel("     Format: x/y or x", 1, 2, 1, 1);
+	JLabel resultLabel = addLabel("      Result: ", 5, 2, 1, 1);
 
 	// button event handler
 	public void buttonClicked(JButton button) {
@@ -69,7 +75,7 @@ public class FractionGUI extends GBFrame {
 
 			String finalFraction = reduceFraction(numeratorProduct, denominatorProduct);
 
-			resultLabel.setText(finalFraction);
+			resultLabel.setText("      Result:  " + finalFraction);
 
 		}
 	}
@@ -139,8 +145,7 @@ public class FractionGUI extends GBFrame {
 				break;
 			}
 		}
-		if (gcf == 0)
-			gcf = 1;
+		if (gcf == 0) gcf = 1;
 		return gcf;
 	}
 
@@ -174,8 +179,7 @@ public class FractionGUI extends GBFrame {
 				if (wholeNum == 0) {
 					finalFraction = "" + remainder + "/" + denominator;
 				} else {
-					// remove negative character from output on remainder if whole number is
-					// negative
+					// remove negative character from output on remainder if whole number is negative
 					if (wholeNum < 0) {
 						finalFraction = "" + wholeNum + " " + Math.abs(remainder) + "/" + denominator;
 					} else {
@@ -188,8 +192,7 @@ public class FractionGUI extends GBFrame {
 
 	}
 
-	// this method corrects the signs on the fraction and returns the result in an
-	// array
+	// this method corrects the signs on the fraction and returns the result in an array
 	public int[] flipFraction(int numerator, int denominator) {
 		int[] result = { numerator, denominator };
 
@@ -207,8 +210,7 @@ public class FractionGUI extends GBFrame {
 		return result;
 	}
 
-	// this method finds the amount of times a character occurs in a string, used
-	// for error checking multiple '/' symbols
+	// this method finds the amount of times a character occurs in a string, used for error checking multiple '/' symbols
 	public byte occurencesInString(String str, char c) {
 		byte occ = 0;
 		int firstIndex = str.indexOf(c);
@@ -221,8 +223,7 @@ public class FractionGUI extends GBFrame {
 		return occ;
 	}
 
-	// constructor that modifies the buttongroup and sets the default radio button
-	// selected
+	// constructor that modifies the buttongroup and sets the default radio button selected
 	public FractionGUI() {
 		bgTypeOfFraction.add(improperButton);
 		bgTypeOfFraction.add(mixedButton);
@@ -233,7 +234,7 @@ public class FractionGUI extends GBFrame {
 	public void clearFields() {
 		fraction1Field.setText("");
 		fraction2Field.setText("");
-		resultLabel.setText("");
+		resultLabel.setText("      Result:  ");
 	}
 
 	public static void main(String[] args) {
