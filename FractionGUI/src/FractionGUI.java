@@ -1,10 +1,5 @@
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-import BreezySwing.GBFrame;
+import BreezySwing.*;
+import javax.swing.*;
 
 public class FractionGUI extends GBFrame {
 
