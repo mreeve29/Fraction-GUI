@@ -8,25 +8,26 @@ import javax.swing.*;
 public class FractionGUI extends GBFrame {
 
 	// Add User Inputs / Buttons
-	JTextField fraction1Field = addTextField("", 2, 0, 1, 1);
-	JTextField fraction2Field = addTextField("", 2, 3, 1, 1);
+	JTextField fraction1Field = addTextField("",                       2, 0, 1, 1);
+	JTextField fraction2Field = addTextField("",                       2, 3, 1, 1);
 
-	JLabel multipltySymbol = addLabel("                    X", 2, 2, 1, 1);
+	JLabel multipltySymbol = addLabel("                 X",            2, 2, 1, 1);
 
-	JButton multiplyButton = addButton("      Multiply      ", 6, 3, 1, 1);
-	JButton clearButton = addButton("        Clear        ", 7, 3, 1, 1);
+	JButton multiplyButton = addButton("      Multiply      ",         6, 3, 1, 1);
+	JButton clearButton =    addButton("       Clear        ",         7, 3, 1, 1);
 
-	JLabel outputModeLabel = addLabel("Output Mode:", 5, 1, 1, 1);
+	JLabel outputModeLabel = addLabel("Output Mode:",                  5, 1, 1, 1);
 	
 	// Group for radio buttons
 	ButtonGroup bgTypeOfFraction = new ButtonGroup();	
 	
-	JRadioButton mixedButton = addRadioButton("Mixed Number", 6, 1, 1, 1);
-	JRadioButton improperButton = addRadioButton("Improper Fraction", 7, 1, 1, 1);
+	JRadioButton mixedButton = addRadioButton("Mixed Number",          6, 1, 1, 1);
+	JRadioButton improperButton = addRadioButton("Improper Fraction",  7, 1, 1, 1);
 
 	// Labels
-	JLabel formatLabel = addLabel("     Format: x/y or x", 1, 2, 1, 1);
-	JLabel resultLabel = addLabel("      Result: ", 5, 2, 1, 1);
+	JLabel formatLabel = addLabel("     Format: x/y or x",             1, 2, 1, 1);
+	JLabel resultLabel = addLabel("Result: ",                          5, 2, 1, 1);
+	JLabel productLabel = addLabel("",                                 5, 3, 1, 1);
 
 	// button event handler
 	public void buttonClicked(JButton button) {
@@ -75,7 +76,7 @@ public class FractionGUI extends GBFrame {
 
 			String finalFraction = reduceFraction(numeratorProduct, denominatorProduct);
 
-			resultLabel.setText("      Result:  " + finalFraction);
+			productLabel.setText("" + finalFraction);
 
 		}
 	}
@@ -90,6 +91,7 @@ public class FractionGUI extends GBFrame {
 		String check = "NOERROR";
 
 		// if user only enters '/'
+		//this works when the user enters a whole number because '/1' is added to the end of the string internally
 		if (fraction1.length <= 1 || fraction2.length <= 1) {
 			check = "";
 			return check;
@@ -234,13 +236,14 @@ public class FractionGUI extends GBFrame {
 	public void clearFields() {
 		fraction1Field.setText("");
 		fraction2Field.setText("");
-		resultLabel.setText("      Result:  ");
+		productLabel.setText("");
+		improperButton.setSelected(true);
 	}
 
 	public static void main(String[] args) {
 		FractionGUI frm = new FractionGUI();
 		frm.setTitle("Fraction Multiplier");
-		frm.setSize(400, 200);
+		frm.setSize(470, 300);
 		frm.setVisible(true);
 		frm.setLocation(400, 400);
 	}
