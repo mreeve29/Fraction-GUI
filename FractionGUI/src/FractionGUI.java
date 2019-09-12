@@ -11,7 +11,7 @@ public class FractionGUI extends GBFrame {
 	JTextField fraction1Field = addTextField("",                       2, 0, 1, 1);
 	JTextField fraction2Field = addTextField("",                       2, 3, 1, 1);
 
-	JLabel multipltySymbol = addLabel("                 X",            2, 2, 1, 1);
+	JLabel multipltySymbol = addLabel("                    X",         2, 2, 1, 1);
 
 	JButton multiplyButton = addButton("      Multiply      ",         6, 3, 1, 1);
 	JButton clearButton =    addButton("       Clear        ",         7, 3, 1, 1);
