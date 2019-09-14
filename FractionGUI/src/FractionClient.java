@@ -48,6 +48,7 @@ public class FractionClient extends GBFrame {
 			// error check / display message
 			String errorCheck = errorcheck(fraction1Raw, fraction2Raw);
 			if (!errorCheck.equals("NOERROR")) {
+				productLabel.setText("");
 				messageBox("Invalid data, format: 'x/y'\n" + errorCheck);
 				return;
 			}
@@ -71,7 +72,14 @@ public class FractionClient extends GBFrame {
 			
 			product.reduce();
 
-			productLabel.setText("" + product.toString(1));
+			if(mixedButton.isSelected()) {
+				productLabel.setText("" + product.toString(FractionType.MIXED));
+			}else if(improperButton.isSelected()) {
+				productLabel.setText("" + product.toString(FractionType.IMPROPER));
+			}else {
+				productLabel.setText("" + product.toString(FractionType.IMPROPER));
+			}
+			
 
 		}
 	}
@@ -148,7 +156,7 @@ public class FractionClient extends GBFrame {
 	}
 
 	public Fraction multiplyFractions(Fraction f1, Fraction f2) {
-		Fraction product = new Fraction();
+		Fraction product = new Fraction(f1.getNumerator() * f2.getNumerator(),f1.getDenominator() * f2.getDenominator());
 
 		product.setNumerator(f1.getNumerator() * f2.getNumerator());
 		product.setDenominator(f1.getDenominator() * f2.getDenominator());
@@ -166,7 +174,7 @@ public class FractionClient extends GBFrame {
 
 	public static void main(String[] args) {
 		FractionClient frm = new FractionClient();
-		frm.setTitle("Fraction Multiplier");
+		frm.setTitle("Fraction Multiplier - Updated");
 		frm.setSize(470, 300);
 		frm.setVisible(true);
 		frm.setLocation(400, 400);

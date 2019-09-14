@@ -1,4 +1,10 @@
 
+
+enum FractionType{
+	IMPROPER, MIXED
+}
+
+
 public class Fraction {
 
 	private int numerator;
@@ -7,6 +13,10 @@ public class Fraction {
 	
 	private int findGCF(int numer, int denom) {
 		// sort two inputs
+		
+		numer = Math.abs(numer);
+		denom = Math.abs(denom);
+		
 		int low  = Math.min(numer, denom);
 		int max  = Math.max(numer, denom);
 
@@ -26,9 +36,14 @@ public class Fraction {
 		int gcf = findGCF(numerator, denominator);
 		numerator /= gcf;
 		denominator /= gcf;
+		
+		System.out.println(numerator + "/" + denominator);
+		
 	}
 	
-	public String toString(int type) {
+	public String toString(FractionType type) {
+		//flipFraction();
+		
 		//type:
 		//1 --> improper
 		//2 --> mixed
@@ -45,10 +60,10 @@ public class Fraction {
 		}
 		
 		// output correct format depending on if user want mixed or improper
-		if (type == 1) {
+		if (type == FractionType.IMPROPER) {
 			finalFraction = numerator + "/" + denominator;
 			return finalFraction;
-		} else if (type == 2) {
+		} else if (type == FractionType.MIXED) {
 			if (numerator % denominator == 0) {
 				finalFraction = "" + numerator / denominator;
 			} else {
@@ -70,6 +85,7 @@ public class Fraction {
 	}
 	
 	private void flipFraction() {
+		System.out.println("input: " + numerator + "/" + denominator);
 		if(denominator < 0) {
 			numerator = -numerator;
 			denominator = -denominator;
@@ -77,15 +93,19 @@ public class Fraction {
 			numerator = Math.abs(numerator);
 			denominator = Math.abs(denominator);
 		}
+		System.out.println("output: " + numerator + "/" + denominator);
+		System.out.println();
 	}
 	
 	
 	public void setNumerator(int numer) {
 		numerator = numer;
+		//flipFraction();
 	}
 	
 	public void setDenominator(int denom) {
 		denominator = denom;
+		//flipFraction();
 	}
 	
 	public int getNumerator() {
@@ -106,6 +126,7 @@ public class Fraction {
 	public Fraction(int numer, int denom) {
 		numerator = numer;
 		denominator = denom;
+		flipFraction();
 	}
 	
 	
