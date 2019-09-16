@@ -1,5 +1,3 @@
-
-
 enum FractionType{
 	IMPROPER, MIXED
 }
@@ -18,7 +16,6 @@ public class Fraction {
 		denom = Math.abs(denom);
 		
 		int low  = Math.min(numer, denom);
-		int max  = Math.max(numer, denom);
 
 		// loop to find gcf
 		int gcf = low;
@@ -42,12 +39,6 @@ public class Fraction {
 	}
 	
 	public String toString(FractionType type) {
-		//flipFraction();
-		
-		//type:
-		//1 --> improper
-		//2 --> mixed
-		
 		String finalFraction = "";
 
 		// basic formatting rules that apply for improper and mixed outputs
